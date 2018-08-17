@@ -1,7 +1,7 @@
 is_releasable = false
 
 pipeline {
-    agent { any }
+    agent any
 
     stages {
         stage('prepare') {
