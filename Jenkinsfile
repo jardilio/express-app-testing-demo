@@ -4,19 +4,14 @@ pipeline {
     agent { docker { image 'node:6-alpine' } }
 
     stages {
-        stage('checkout') {
-            steps {
-                scm checkout
-                script {
-                    is_releasable = env.BRANCH_NAME == 'master'
-                }
-            }
-        }
         stage('prepare') {
             steps {
                 sh 'rm -rf coverage/*'
                 sh 'npm prune'
                 sh 'npm install'
+                script {
+                    is_releasable = env.BRANCH_NAME == 'master'
+                }
             }
         }
         stage('test') {
