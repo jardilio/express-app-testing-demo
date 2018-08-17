@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+<testsuite package="org.eslint" time="0" tests="1" errors="0" name="/Users/jardilio/Repos/express-app-testing-demo/app/__mocks__/photo_model.js">
+<testcase time="0" name="/Users/jardilio/Repos/express-app-testing-demo/app/__mocks__/photo_model.js" />
+</testsuite>
+<testsuite package="org.eslint" time="0" tests="1" errors="0" name="/Users/jardilio/Repos/express-app-testing-demo/app/__tests__/app.test.js">
+<testcase time="0" name="/Users/jardilio/Repos/express-app-testing-demo/app/__tests__/app.test.js" />
+</testsuite>
+<testsuite package="org.eslint" time="0" tests="1" errors="0" name="/Users/jardilio/Repos/express-app-testing-demo/app/__tests__/form_validator.test.js">
+<testcase time="0" name="/Users/jardilio/Repos/express-app-testing-demo/app/__tests__/form_validator.test.js" />
+</testsuite>
+<testsuite package="org.eslint" time="0" tests="1" errors="0" name="/Users/jardilio/Repos/express-app-testing-demo/app/__tests__/jsonp_helper.test.js">
+<testcase time="0" name="/Users/jardilio/Repos/express-app-testing-demo/app/__tests__/jsonp_helper.test.js" />
+</testsuite>
+<testsuite package="org.eslint" time="0" tests="1" errors="0" name="/Users/jardilio/Repos/express-app-testing-demo/app/__tests__/photo_model.test.js">
+<testcase time="0" name="/Users/jardilio/Repos/express-app-testing-demo/app/__tests__/photo_model.test.js" />
+</testsuite>
+<testsuite package="org.eslint" time="0" tests="1" errors="0" name="/Users/jardilio/Repos/express-app-testing-demo/app/form_validator.js">
+<testcase time="0" name="/Users/jardilio/Repos/express-app-testing-demo/app/form_validator.js" />
+</testsuite>
+<testsuite package="org.eslint" time="0" tests="1" errors="0" name="/Users/jardilio/Repos/express-app-testing-demo/app/jsonp_helper.js">
+<testcase time="0" name="/Users/jardilio/Repos/express-app-testing-demo/app/jsonp_helper.js" />
+</testsuite>
+<testsuite package="org.eslint" time="0" tests="1" errors="0" name="/Users/jardilio/Repos/express-app-testing-demo/app/photo_model.js">
+<testcase time="0" name="/Users/jardilio/Repos/express-app-testing-demo/app/photo_model.js" />
+</testsuite>
+<testsuite package="org.eslint" time="0" tests="1" errors="0" name="/Users/jardilio/Repos/express-app-testing-demo/app/route.js">
+<testcase time="0" name="/Users/jardilio/Repos/express-app-testing-demo/app/route.js" />
+</testsuite>
+<testsuite package="org.eslint" time="0" tests="1" errors="0" name="/Users/jardilio/Repos/express-app-testing-demo/app/server.js">
+<testcase time="0" name="/Users/jardilio/Repos/express-app-testing-demo/app/server.js" />
+</testsuite>
+<testsuite package="org.eslint" time="0" tests="1" errors="0" name="/Users/jardilio/Repos/express-app-testing-demo/e2e_tests/flickr_public_feed_api.test.js">
+<testcase time="0" name="/Users/jardilio/Repos/express-app-testing-demo/e2e_tests/flickr_public_feed_api.test.js" />
+</testsuite>
+</testsuites>

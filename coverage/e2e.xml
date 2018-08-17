@@ -1,0 +1,10 @@
+<testsuites name="jest tests" tests="3" failures="0" time="1.584">
+  <testsuite name="flickr public feed api" errors="0" failures="0" skipped="0" timestamp="2018-08-17T19:39:30" time="1.524" tests="3">
+    <testcase classname="flickr public feed api should return expected json format" name="flickr public feed api should return expected json format" time="0.415">
+    </testcase>
+    <testcase classname="flickr public feed api should return many photos" name="flickr public feed api should return many photos" time="0.274">
+    </testcase>
+    <testcase classname="flickr public feed api should return zero photos" name="flickr public feed api should return zero photos" time="0.17">
+    </testcase>
+  </testsuite>
+</testsuites>

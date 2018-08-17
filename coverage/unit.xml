@@ -1,0 +1,50 @@
+<testsuites name="jest tests" tests="20" failures="0" time="0.982">
+  <testsuite name="index route" errors="0" failures="0" skipped="0" timestamp="2018-08-17T19:39:07" time="0.423" tests="4">
+    <testcase classname="index route should respond with a 200 with no query parameters" name="index route should respond with a 200 with no query parameters" time="0.032">
+    </testcase>
+    <testcase classname="index route should respond with a 200 with valid query parameters" name="index route should respond with a 200 with valid query parameters" time="0.008">
+    </testcase>
+    <testcase classname="index route should respond with a 200 with invalid query parameters" name="index route should respond with a 200 with invalid query parameters" time="0.005">
+    </testcase>
+    <testcase classname="index route should respond with a 500 error due to bad jsonp data" name="index route should respond with a 500 error due to bad jsonp data" time="0.005">
+    </testcase>
+  </testsuite>
+  <testsuite name="getFlickrPhotos(tags, tagmode, callback)" errors="0" failures="0" skipped="0" timestamp="2018-08-17T19:39:08" time="0.043" tests="3">
+    <testcase classname="getFlickrPhotos(tags, tagmode, callback) should return photos" name="getFlickrPhotos(tags, tagmode, callback) should return photos" time="0.006">
+    </testcase>
+    <testcase classname="getFlickrPhotos(tags, tagmode, callback) should error when api returns 500 http status code" name="getFlickrPhotos(tags, tagmode, callback) should error when api returns 500 http status code" time="0.002">
+    </testcase>
+    <testcase classname="getFlickrPhotos(tags, tagmode, callback) should error with invalid jsonp data" name="getFlickrPhotos(tags, tagmode, callback) should error with invalid jsonp data" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="parseJSONP(jsonpData)" errors="0" failures="0" skipped="0" timestamp="2018-08-17T19:39:08" time="0.027" tests="3">
+    <testcase classname="parseJSONP(jsonpData) should parse valid jsonp data" name="parseJSONP(jsonpData) should parse valid jsonp data" time="0.002">
+    </testcase>
+    <testcase classname="parseJSONP(jsonpData) should parse jsonp data with escaped single quotes" name="parseJSONP(jsonpData) should parse jsonp data with escaped single quotes" time="0">
+    </testcase>
+    <testcase classname="parseJSONP(jsonpData) should throw error when parsing invalid jsonp data" name="parseJSONP(jsonpData) should throw error when parsing invalid jsonp data" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="isValidCommaDelimitedList(value)" errors="0" failures="0" skipped="0" timestamp="2018-08-17T19:39:08" time="0.035" tests="10">
+    <testcase classname="isValidCommaDelimitedList(value) should return true for valid list of search terms" name="isValidCommaDelimitedList(value) should return true for valid list of search terms" time="0.002">
+    </testcase>
+    <testcase classname="isValidCommaDelimitedList(value) should return true for valid single search term" name="isValidCommaDelimitedList(value) should return true for valid single search term" time="0">
+    </testcase>
+    <testcase classname="isValidCommaDelimitedList(value) should return false for search term containing numbers" name="isValidCommaDelimitedList(value) should return false for search term containing numbers" time="0.001">
+    </testcase>
+    <testcase classname="isValidCommaDelimitedList(value) should return false for search term containing special characters" name="isValidCommaDelimitedList(value) should return false for search term containing special characters" time="0">
+    </testcase>
+    <testcase classname="isValidTagmode(value) should return true for valid tagmode &quot;any&quot;" name="isValidTagmode(value) should return true for valid tagmode &quot;any&quot;" time="0.001">
+    </testcase>
+    <testcase classname="isValidTagmode(value) should return true for valid tagmode &quot;all&quot;" name="isValidTagmode(value) should return true for valid tagmode &quot;all&quot;" time="0">
+    </testcase>
+    <testcase classname="isValidTagmode(value) should return false for invalid tagmode" name="isValidTagmode(value) should return false for invalid tagmode" time="0.001">
+    </testcase>
+    <testcase classname="hasValidFlickrAPIParams(tags, tagmode) should return true for valid params" name="hasValidFlickrAPIParams(tags, tagmode) should return true for valid params" time="0.001">
+    </testcase>
+    <testcase classname="hasValidFlickrAPIParams(tags, tagmode) should return false for invalid tags" name="hasValidFlickrAPIParams(tags, tagmode) should return false for invalid tags" time="0">
+    </testcase>
+    <testcase classname="hasValidFlickrAPIParams(tags, tagmode) should return false for invalid tagmode" name="hasValidFlickrAPIParams(tags, tagmode) should return false for invalid tagmode" time="0.001">
+    </testcase>
+  </testsuite>
+</testsuites>
