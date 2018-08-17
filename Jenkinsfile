@@ -39,7 +39,11 @@ pipeline {
                 expression { is_releasable }
             }
             steps {
-                sh "docker build --compress --tag demo-app:${env.GIT_COMMIT} ."
+                script {
+                    //docker.withRegistry('http://artifactory:8081', 'artifactory-creditentials-id') {
+                        docker.build("${env.JOB_NAME}:${env.GIT_COMMIT}")//.push()
+                    //}
+                }
             }
         }
     }
