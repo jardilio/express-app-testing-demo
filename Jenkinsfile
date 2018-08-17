@@ -1,10 +1,11 @@
 is_releasable = false
 
 pipeline {
-    agent { docker { image 'node:6-alpine' } }
+    agent { any }
 
     stages {
         stage('prepare') {
+            agent { docker { image 'node:6-alpine' } }
             steps {
                 sh 'rm -rf coverage/*'
                 sh 'npm prune'
@@ -15,6 +16,7 @@ pipeline {
             }
         }
         stage('test') {
+            agent { docker { image 'node:6-alpine' } }
             steps {
                 sh 'npm run test'
                 sh 'npm run test:e2e'
