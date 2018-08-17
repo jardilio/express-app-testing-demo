@@ -20,11 +20,12 @@ pipeline {
             steps {
                 sh 'npm run test'
                 sh 'npm run test:e2e'
+                stash name: 'test', allowEmpty: false, includes: 'coverage/**'
             }
         }
         stage('analyze') {
             steps {
-                stash name: 'test', allowEmpty: false, includes: 'coverage/**'
+                unstash 'test'
                 junit testResults: 'coverage/junit-*.xml'
                 step([
                     $class: 'CloverPublisher',
@@ -42,9 +43,9 @@ pipeline {
             }
             steps {
                 script {
-                    //docker.withRegistry('http://artifactory:8081', 'artifactory-creditentials-id') {
+                    docker.withRegistry('http://artifactory:8081', 'artifactory-credentials-id') {
                         docker.build("${env.JOB_NAME}:${env.GIT_COMMIT}")//.push()
-                    //}
+                    }
                 }
             }
         }
