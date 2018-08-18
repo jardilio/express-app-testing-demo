@@ -1,4 +1,7 @@
-is_releasable = false
+branch_name = env.BRANCH_NAME || 'master'
+git_commit = env.GIT_COMMIT || env.BUILD_NUM || 'local'
+job_name = env.JOB_NAME
+is_releasable = branch_name == 'master'
 
 pipeline {
     agent any
@@ -7,12 +10,12 @@ pipeline {
         stage('prepare') {
             agent { docker { image 'node:6-alpine' } }
             steps {
+                //git branch: branch_name, url: 'https://github.com/jardilio/express-app-testing-demo.git'
                 sh 'rm -rf coverage/*'
+                sh 'rm -rf *.tar'
                 sh 'npm prune'
                 sh 'npm install'
-                script {
-                    is_releasable = env.BRANCH_NAME == 'master'
-                }
+                stash name: 'app', includes: '**/*'
             }
         }
         stage('test') {
@@ -20,7 +23,7 @@ pipeline {
             steps {
                 sh 'npm run test'
                 sh 'npm run test:e2e'
-                stash name: 'test', allowEmpty: false, includes: 'coverage/**'
+                stash name: 'test', includes: 'coverage/**'
             }
         }
         stage('analyze') {
@@ -37,15 +40,35 @@ pipeline {
                 ])
             }
         }
-        stage('package') {
+        stage('build') {
+            steps {
+                unstash 'app'
+                sh 'ls node_modules'
+                sh "docker build --compress --tag ${job_name}:${git_commit} ."
+                sh "docker save ${job_name}:${git_commit} > app.tar"
+            }
+        }
+        stage('publish') {
             when { 
                 expression { is_releasable }
             }
             steps {
+                unstash 'test'
                 script {
-                    docker.withRegistry('http://artifactory:8081/artifactory/api/docker/', 'artifactory-credentials-id') {
-                        docker.build("${env.JOB_NAME}:${env.GIT_COMMIT}")//.push()
-                    }
+                    def server = Artifactory.server 'artifactory'
+                    def spec = """{
+                      "files": [
+                        {
+                          "pattern": "*.tar",
+                          "target": "${job_name}/${git_commit}/"
+                        },
+                        {
+                          "pattern": "coverage/**",
+                          "target": "${job_name}/${git_commit}/coverage"
+                        }
+                     ]
+                    }"""
+                    server.upload(spec)
                 }
             }
         }
@@ -60,7 +83,7 @@ pipeline {
         cleanup {
             script {
                 try {
-                    //notifyBitbucket()
+                    //TODO: update commit status
                 }
                 catch(e) {
                     echo "Error updating commit status on repo: ${e}"
