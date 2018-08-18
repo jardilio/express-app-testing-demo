@@ -1,7 +1,7 @@
-branch_name = env.BRANCH_NAME || 'master'
-git_commit = env.GIT_COMMIT || env.BUILD_NUM || 'local'
-job_name = env.JOB_NAME
-is_releasable = branch_name == 'master'
+branch_name = null
+git_commit = null
+job_name = null
+is_releasable = null
 
 pipeline {
     agent any
@@ -10,6 +10,12 @@ pipeline {
         stage('prepare') {
             agent { docker { image 'node:6-alpine' } }
             steps {
+                script {
+                    branch_name = env.BRANCH_NAME || 'master'
+                    git_commit = env.GIT_COMMIT || 'latest'
+                    job_name = env.JOB_NAME
+                    is_releasable = branch_name == 'master'
+                }
                 //git branch: branch_name, url: 'https://github.com/jardilio/express-app-testing-demo.git'
                 sh 'rm -rf coverage/*'
                 sh 'rm -rf *.tar'
