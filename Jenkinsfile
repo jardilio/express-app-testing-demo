@@ -43,7 +43,7 @@ pipeline {
             }
             steps {
                 script {
-                    docker.withRegistry('http://artifactory:8081', 'artifactory-credentials-id') {
+                    docker.withRegistry('http://artifactory:8081/artifactory/api/docker/', 'artifactory-credentials-id') {
                         docker.build("${env.JOB_NAME}:${env.GIT_COMMIT}")//.push()
                     }
                 }
