@@ -11,8 +11,8 @@ pipeline {
             agent { docker { image 'node:6-alpine' } }
             steps {
                 script {
-                    branch_name = env.BRANCH_NAME || 'master'
-                    git_commit = env.GIT_COMMIT || 'latest'
+                    branch_name = env.BRANCH_NAME ?: 'master'
+                    git_commit = env.GIT_COMMIT ?: 'latest'
                     job_name = env.JOB_NAME
                     is_releasable = branch_name == 'master'
                 }
