@@ -69,8 +69,8 @@ pipeline {
                           "target": "${job_name}/${git_commit}/"
                         },
                         {
-                          "pattern": "coverage/**",
-                          "target": "${job_name}/${git_commit}/coverage"
+                          "pattern": "coverage",
+                          "target": "${job_name}/${git_commit}"
                         }
                      ]
                     }"""
