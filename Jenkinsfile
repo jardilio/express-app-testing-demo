@@ -1,27 +1,16 @@
-branch_name = null
-git_commit = null
-job_name = null
-is_releasable = null
-
+#!groovy​
 pipeline {
     agent any
-
     stages {
-        stage('prepare') {
+        stage('clean') {
             agent { docker { image 'node:6-alpine' } }
             steps {
-                script {
-                    branch_name = env.BRANCH_NAME ?: 'master'
-                    git_commit = env.GIT_COMMIT ?: 'latest'
-                    job_name = env.JOB_NAME
-                    is_releasable = branch_name == 'master'
-                }
-                //git branch: branch_name, url: 'https://github.com/jardilio/express-app-testing-demo.git'
+                git 'https://github.com/jardilio/express-app-testing-demo.git'
+                sh 'rm -rf *.image.tar'
                 sh 'rm -rf coverage/*'
-                sh 'rm -rf *.tar'
                 sh 'npm prune'
                 sh 'npm install'
-                stash name: 'app', includes: '**/*'
+                stash name: 'clean', includes: '**/*'
             }
         }
         stage('test') {
@@ -34,68 +23,36 @@ pipeline {
         }
         stage('analyze') {
             steps {
+                unstash 'clean'
                 unstash 'test'
-                junit testResults: 'coverage/junit-*.xml'
-                step([
-                    $class: 'CloverPublisher',
-                    cloverReportDir: 'coverage',
-                    cloverReportFileName: 'clover.xml',
-                    healthyTarget: [methodCoverage: 70, conditionalCoverage: 80, statementCoverage: 80],
-                    unhealthyTarget: [methodCoverage: 50, conditionalCoverage: 50, statementCoverage: 50],
-                    failingTarget: [methodCoverage: 0, conditionalCoverage: 0, statementCoverage: 0]
-                ])
+                script {
+                    doiab.pushSonarQube(this)
+                }
             }
         }
         stage('build') {
             steps {
-                unstash 'app'
-                sh 'ls node_modules'
-                sh "docker build --compress --tag ${job_name}:${git_commit} ."
-                sh "docker save ${job_name}:${git_commit} > app.tar"
+                unstash 'clean'
+                sh "docker build --compress --tag app:latest ."
+                sh "docker save app:latest > app.image.tar"
+                stash name: 'build', includes: 'app.image.tar'
             }
         }
         stage('publish') {
-            when { 
-                expression { is_releasable }
-            }
             steps {
                 unstash 'test'
+                unstash 'build'
                 script {
-                    def server = Artifactory.server 'artifactory'
-                    def spec = """{
-                      "files": [
-                        {
-                          "pattern": "*.tar",
-                          "target": "${job_name}/${git_commit}/"
-                        },
-                        {
-                          "pattern": "coverage/*.xml",
-                          "target": "${job_name}/${git_commit}/"
-                        }
-                     ]
-                    }"""
-                    server.upload(spec)
+                    doiab.pushArtifactory(this, ["app.image.tar"])
                 }
             }
         }
     }
-
     post {
-        success {
-            script {
-                currentBuild.result = 'SUCCESS';
-            }
-        }
         cleanup {
             script {
-                try {
-                    //TODO: update commit status
-                }
-                catch(e) {
-                    echo "Error updating commit status on repo: ${e}"
-                }
+                doiab.pushNotifications(this)
             }
         }
     }
-
 }
