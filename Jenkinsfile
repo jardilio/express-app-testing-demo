@@ -5,7 +5,7 @@ pipeline {
         stage('clean') {
             agent { docker { image 'node:6-alpine' } }
             steps {
-                git 'https://github.com/jardilio/express-app-testing-demo.git'
+                //git 'https://github.com/jardilio/express-app-testing-demo.git'
                 sh 'rm -rf *.image.tar'
                 sh 'rm -rf coverage/*'
                 sh 'npm prune'
