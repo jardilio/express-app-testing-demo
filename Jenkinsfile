@@ -16,6 +16,7 @@ pipeline {
         stage('test') {
             agent { docker { image 'node:6-alpine' } }
             steps {
+                unstash 'clean'
                 sh 'npm run test'
                 sh 'npm run test:e2e'
                 stash name: 'test', includes: 'coverage/**'
