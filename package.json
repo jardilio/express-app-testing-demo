@@ -9,13 +9,15 @@
   "main": "app/server.js",
   "scripts": {
     "start": "nodemon app/server.js",
-    "test": "npm run lint && npm run jest",
-    "posttest": "find ./coverage/*.* -type f -exec sed -i '' -e \"s|$PWD/||\" {} \\;",
+    "test": "npm run test:unit && npm run test:e2e",
+    "test:unit": "npm run lint && npm run jest",
+    "cleanreports": "find ./coverage/*.* -type f -exec sed -i '' -e \"s|$PWD/||\" {} \\;",
     "test:e2e": "jest --reporters='jest-junit' --runInBand e2e_tests/*.test.js",
-    "posttest:e2e": "mv junit.xml coverage/junit-e2e.xml",
+    "posttest:e2e": "mv junit.xml coverage/junit-e2e.xml && npm run cleanreports",
     "jest": "jest --reporters='jest-junit' --coverage app/__tests__/*.test.js",
-    "postjest": "mv junit.xml coverage/junit-test.xml",
+    "posttest": "mv junit.xml coverage/junit-test.xml && npm run cleanreports",
     "lint": "eslint -f junit -o ./coverage/junit-lint.xml app/** e2e_tests/*",
+    "postlint": "npm run cleanreports",
     "prettier": "prettier --write app/*.js app/__{tests,mocks}__/*.js e2e_tests/*.js"
   },
   "dependencies": {
