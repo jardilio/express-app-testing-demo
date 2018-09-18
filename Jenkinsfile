@@ -64,6 +64,13 @@ pipeline {
                     devops.pushArtifactory(this, ["app.image.tar"])
                 }
             }
+        }        
+        stage('deploy') {
+            steps {
+                script {
+                    devops.deployGCPAppEngine(this, "app.image.tar", "app:latest", "devops-demo-216801")
+                }
+            }
         }
     }
     post {
